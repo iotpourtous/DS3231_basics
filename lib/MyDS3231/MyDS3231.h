@@ -14,7 +14,6 @@ private:
     char _daysOfTheWeek[7][12] = {"Dimanche", "Lundi", "Mardi", "Mercredi", "jeudi", "Vendredi", "Samedi"};
 
 public:
-    virtual void begin();
     char *dayOfTheWeek();
     void year(uint16_t year);
     void month(uint16_t month);
@@ -22,14 +21,18 @@ public:
     void hour(uint16_t hour);
     void minute(uint16_t minute);
     void second(uint16_t second);
+    /*
     char *formattedDate()
     {
-        char _formattedFormat[] = "DD/MM/YYYY hh:mm:ss";
-        return now().toString(_formattedFormat);
-    }
 
-    void readCommand(int sensorId, char *readData);
-    void writeCommand(int sensorId, char *readData);
+    DateTime zaza = now();
+    Serial.println(zaza.year(), DEC);
+    Serial.println(F(zaza.toString(_formattedFormat)));
+        return zaza.toString(_formattedFormat);
+    }
+*/
+    String readCommand(int sensorId, char *readData);
+    String writeCommand(char *readData);
 };
 
 extern MyDS3231 myDS3231;
