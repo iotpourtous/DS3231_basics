@@ -22,7 +22,7 @@ void setup()
 void loop()
 {
     commandsFromSerial();
-    commandsFromBT();
+    commandsFromBT();/*
     DateTime now = rtc.now();
     char buf1[] = "DD/MM/YYYY hh:mm:ss";
     Serial.println(String(rtc.dayOfTheWeek()) + " " + now.toString(buf1));
@@ -32,5 +32,6 @@ void loop()
     Serial.println(now.toString(buf4));
     char buf2[] = "YYMMDD-hh:mm:ss";
     Serial.println(now.toString(buf2));
+    */
     delay(2000);
 }

@@ -3,55 +3,34 @@
 
 #include "ds3231Def.h"
 
-String commands(char *readData)
+String commands(String command)
 {
-  String retour = "Commande inexistante";
-  switch (readData[0])
+  if (command.substring(0, 2).equals("<" + String(DS3231_SENSOR_ID)))
   {
-  case '<':
-    if ((readData[1] - '0') == DS3231_SENSOR_ID)
-    {
-      char subbuff[8];
-      memcpy(subbuff, &readData[2], 8);
-      retour = "<" + String(DS3231_SENSOR_ID) + rtc.writeCommand(subbuff);
-    }
-    break;
-  case '>':
-    if ((readData[1] - '0') == DS3231_SENSOR_ID)
-    {
-      char subbuff[8];
-      memcpy(subbuff, &readData[2], 8);
-      retour = ">" + String(DS3231_SENSOR_ID) + rtc.readCommand(DS3231_SENSOR_ID, subbuff);
-    }
-    break;
+    return rtc.writeCommand(command.substring(2));
   }
-  return retour;
+  else if (command.substring(0, 2).equals(">" + String(DS3231_SENSOR_ID)))
+  {
+    return rtc.readCommand(command.substring(2), DS3231_SENSOR_ID);
+  }
+  return "Commande inexistante";
 }
 
 void commandsFromSerial()
 {
-  if (Serial.available() > 0)
+  if (Serial.available())
   {
-    char readData[MAX_COMMAND_SIZE];
-
-    size_t bytesReceived = Serial.readBytesUntil('\n', readData, MAX_COMMAND_SIZE);
-    if (bytesReceived > 0)
-    {
-      Serial.println(commands(readData));
-    }
+    String command = Serial.readStringUntil('\n');
+    Serial.println(commands(command));
   }
 }
+
 void commandsFromBT()
 {
   if (SerialBT.available() > 0)
   {
-    char readData[MAX_COMMAND_SIZE];
-
-    size_t bytesReceived = SerialBT.readBytesUntil('\n', readData, MAX_COMMAND_SIZE);
-    if (bytesReceived > 0)
-    {
-      SerialBT.println(commands(readData));
-    }
+      String command = SerialBT.readStringUntil('\n');
+      SerialBT.println(commands(command));
   }
 }
 

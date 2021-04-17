@@ -12,6 +12,7 @@ class MyDS3231 : public RTC_DS3231
 {
 private:
     char _daysOfTheWeek[7][12] = {"Dimanche", "Lundi", "Mardi", "Mercredi", "jeudi", "Vendredi", "Samedi"};
+    boolean isNotIntValue(String data);
 
 public:
     char *dayOfTheWeek();
@@ -21,18 +22,9 @@ public:
     void hour(uint16_t hour);
     void minute(uint16_t minute);
     void second(uint16_t second);
-    /*
-    char *formattedDate()
-    {
 
-    DateTime zaza = now();
-    Serial.println(zaza.year(), DEC);
-    Serial.println(F(zaza.toString(_formattedFormat)));
-        return zaza.toString(_formattedFormat);
-    }
-*/
-    String readCommand(int sensorId, char *readData);
-    String writeCommand(char *readData);
+    String readCommand(String command, int8_t sensorId);
+    String writeCommand(String command);
 };
 
 extern MyDS3231 myDS3231;
